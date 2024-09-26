@@ -7,6 +7,7 @@ import { API_BASE_URL } from "@/config";
 import StudentData from "../../atoms/studentData";
 
 interface Data {
+  _id:string,
   selectedYear:string, 
   studentName:string, 
   studentClass: string, 
@@ -16,10 +17,9 @@ const StudentUI = () => {
  const [display, setDisplay] = useState<boolean>(false)
  const [displayClasses, setDisplayClasses] = useState<boolean>(false)
  const [studentData, setStudentData] = useState<string[]>([])
- const [updateClass, setUpdateClass] = useState<boolean>(false)
  const [selectedYear, setSelectedYear] = useState<string>("")
  const [studentClass, setStudentClass] = useState<string>("")
- const [results, setResults] = useState<any[]>([]); // To store search results
+ const [results, setResults] = useState<Data[]>([]); // To store search results
  const [loading, setLoading] = useState<boolean>(false);
  const [error, setError] = useState<string | null>(null);
  const [update, setUpdate] = useState<boolean>(false)
@@ -87,13 +87,13 @@ const StudentUI = () => {
  
 return (
 <div>
-          <div>
-            {displayClasses ? <StudentData data={results} loading={loading} error={error} handleBack={handleBack}/> : 
-            <div>
-            {display ? <AcademicClasses handleBack={sessionBack} classesData={studentData} studentsProfile={studentProfile}/> : <AcademicSessions showClasses={showClasses} textTitle="Academic Year List"/> }
-            </div> 
-            }
-          </div>
+     <div>
+       {displayClasses ? <StudentData data={results} loading={loading} error={error} handleBack={handleBack}/> : 
+       <div>
+       {display ? <AcademicClasses handleBack={sessionBack} classesData={studentData} studentsProfile={studentProfile}/> : <AcademicSessions showClasses={showClasses} textTitle="Academic Year List"/> }
+       </div> 
+      }
+    </div>
 </div>
   );
 };

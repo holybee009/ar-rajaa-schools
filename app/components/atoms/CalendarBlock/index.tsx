@@ -1,5 +1,4 @@
 "use client"
-import react from "react"
 
 interface Props {
     weekNumber: number,

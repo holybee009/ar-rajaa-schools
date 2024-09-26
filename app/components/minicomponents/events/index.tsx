@@ -6,10 +6,6 @@ import { API_BASE_URL } from '@/config';
 import EventBlock from '../../atoms/eventBlock';
 import './CustomScrollbar.css'; // Import custom scrollbar styles
 
-interface EventProps {
-    handleScroll: (_: string) => void
-}
-{/* <EventProps> */}
 
 interface EventSchema {
     _id: string,

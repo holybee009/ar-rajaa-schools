@@ -17,14 +17,13 @@ async function fetchNewsById(id: string) {
   try {
     const response = await axios.get(`${API_BASE_URL}/news`+  id);
     return response.data;
-  } catch (error) {
-    return null;
+  } catch (error) { 
+        console.error('Error fetching data:', error);
   }
 }
 
 export default async function NewsPage({ params }: NewsProps) {
   const { id } = params;
-  console.log(id); // Ensure this logs correctly for debugging
 
   // Fetch news item
   const newsItem = await fetchNewsById(id);

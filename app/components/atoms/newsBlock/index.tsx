@@ -1,6 +1,6 @@
 "use client"
 // components/NewsBlock.tsx
-import React,{ useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 interface NewsBlockProps {

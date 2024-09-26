@@ -7,9 +7,6 @@ import NewsBlock from '../../atoms/newsBlock/index';
 import './CustomScrollbar.css';
 import Link from 'next/link';
 
-interface NewsProps {
-  handleScroll: (_: string) => void;
-}
 
 interface NewsSchema {
   _id: string;

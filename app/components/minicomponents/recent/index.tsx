@@ -61,7 +61,7 @@ const Recent: React.FC = () => {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [activitiesData]);
+  }, [activitiesData, nextPhoto()]);
 
   const handleImageError = () => {
     setImageSrc(fallbackImage); // Set the fallback image when an error occurs

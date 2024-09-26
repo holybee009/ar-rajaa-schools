@@ -1,5 +1,5 @@
 "use client"
-import react, {useState} from "react"
+import {useState} from "react"
 import AcademicSessions from "../academicSessions";
 import axios from "axios";
 import { API_BASE_URL } from "@/config";

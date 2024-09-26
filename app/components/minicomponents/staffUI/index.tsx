@@ -6,11 +6,12 @@ import axios from "axios";
 import { API_BASE_URL } from "@/config";
 import StaffData from "../../atoms/staffData";
 
-interface Data {
-  selectedYear:string, 
-  staffName:string, 
-  staffClass: string, 
-  uploadedFileUrl: string
+interface staffResults{
+    _id:string;
+    selectedYear: string,
+    staffName: string,
+    staffClass: string,
+    uploadedFileUrl: string
 }
 const StaffUI = () => {
  const [displayStaff, setDisplayStaff] = useState<boolean>(false)
@@ -18,7 +19,7 @@ const StaffUI = () => {
  const [staffData, setStaffData] = useState<string[]>([])
  const [selectedYear, setSelectedYear] = useState<string>("")
  const [staffClass, setStaffClass] = useState<string>("")
- const [results, setResults] = useState<any[]>([]); // To store search results
+ const [results, setResults] = useState<staffResults[]>([]); // To store search results
  const [loading, setLoading] = useState<boolean>(false);
  const [error, setError] = useState<string | null>(null);
  const [update, setUpdate] = useState<boolean>(false)
@@ -76,10 +77,9 @@ useEffect(() => {
   const fetchData = async () => {
     const response = await axios.get(`${API_BASE_URL}/staff`);
     const datas = response.data;
-    const staffClasses = datas.map((data: Data) => data.staffClass);
+    const staffClasses = datas.map((data: staffResults) => data.staffClass);
     setStaffData(staffClasses);
   };
-
   fetchData();
 }, [setStaffData, fetchData]); // Add setStaffData as a dependency
 
