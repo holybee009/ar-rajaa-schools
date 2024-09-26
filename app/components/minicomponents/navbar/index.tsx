@@ -1,66 +1,65 @@
-"use client";
-// components/Navbar.tsx
-import { useState } from 'react';
-import Modal from '../../atoms/modal';
-import Cancel from "../../icons/cancel.svg"
-import Image from 'next/image';
+"use client"
+// components/News.tsx
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API_BASE_URL } from '@/config';
+import NewsBlock from '../../atoms/newsBlock/index';
+import './CustomScrollbar.css';
+import Link from 'next/link';
 
-interface NavbarProps {
-    handleScroll?: (_: string) => void;
-    about?: string; // Ensure 'about' can be undefined or a string
-    className?:string;
-    classNames?: string;
-    hideNav: () => void;
-    closeNav: () => void
+
+interface NewsSchema {
+  _id: string;
+  title: string;
+  content: string;
+  newsPhoto: string;
+  date: string;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ handleScroll, about, className, classNames, hideNav, closeNav }) => {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [show, setShow] = useState<boolean>(false);
+const News: React.FC = () => {
+  const [newsData, setNewsData] = useState<NewsSchema[]>([]);
+  const [loading, setLoading] = useState(true); // Added loading state
 
-    const navItems: string[] = ["about us", "news", "events", "admissions"];
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/news`)
+      .then((response) => {
+        setNewsData(response.data.slice().reverse());
+        setLoading(false); // Set loading to false after data is fetched
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+        setLoading(false); // Set loading to false if an error occurs
+      });
+  }, []);
 
-    // Handle multiple actions when an item is clicked
-    const handleClick = (index: number, actions: string) => {
-        closeNav()
-        setActiveIndex(index); // Set the clicked item as active
-        if (handleScroll) {
-            handleScroll(actions);
-        }
-        if (actions === "about us") {
-            setShow(true);
-        }
-    };
 
-    return (
-        <div>
-        <div className={`bg-[#fff] w-1/2 md:w-full h-screen md:h-auto absolute top-0 right-0 md:static ${classNames} flex flex-col`}>
-        <Image src={Cancel} alt="cancel" width={24} height={24} className={`${className} cursor-pointer md:hidden`} onClick={hideNav}/>
-            <nav className="bg-[#fff] md:bg-[#0D3C1D] p-4">
-                <ul className="flex flex-col md:flex-row gap-5 md:space-x-4">
-                    {navItems.map((item, index) => (
-                        <li key={item}> {/* Use item as the key instead of index */}
-                            <button
-                                onClick={() => handleClick(index, item)}
-                                className={`px-4 py-2 rounded-md text-white focus:outline-none transition-all duration-300 capitalize w-full md:w-auto
-                                    ${activeIndex === index ? 'bg-[#48CF76]' : 'bg-green-700 hover:bg-green-600'}
-                                `}
-                            >
-                                {item}
-                            </button>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
-        </div>
-        {<Modal show={show} onClose={() => setShow(false)}>
-            <div className='text-black text-center'>
-                    <h1 className='text-center text-2xl uppercase pb-3'>About Us</h1>
-                    <p>{about ? about : "No information available."}</p> 
-                </div>
-            </Modal>}
-        </div>
-    );
+  return (
+    <>
+      <div className='w-full'>
+        <h1 className="text-xl text-white mb-2">News:</h1>
+        {loading ? ( // Show loading message while fetching data
+          <h1>Loading...</h1>
+        ) : (
+          <div className="flex gap-3 overflow-x-auto custom-scrollbar">
+            {newsData.length > 0 ? (
+              newsData.map((news) => (
+                <Link  href={`/news/${news._id}`}  key={news._id}>
+                <NewsBlock
+                  src={news.newsPhoto}
+                  title={news.title}
+                  content={news.content}
+                />
+                </Link>
+              ))
+            ) : (
+              <h1>No news yet</h1>
+            )}
+          </div>
+        )}
+      </div>
+    </>
+  );
 };
 
-export default Navbar;
+export default News;
