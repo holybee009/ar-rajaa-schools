@@ -1,42 +1,64 @@
-import React from 'react';
+"use client"
+// Acknowledgementonents/Acknowledgement.tsx
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API_BASE_URL } from '@/config';
+import Image from 'next/image';
 
-interface Props {
-    showClasses: (_:string) => void,
-    textTitle: string,
-}
 
-const AcademicSessions = ({showClasses, textTitle}: Props) => {
-  const startYear = 2024; // The starting academic year (2023/2024)
-  const currentYear: number = new Date().getFullYear();
-  const currentMonth: number = new Date().getMonth(); // January is 0, August is 6
+interface AcknowledgementSchema {
+    _id: string;
+    acknowledgement: string,
+    photo: string,
+  }
 
-  // Function to generate the list of academic years
-  const generateAcademicYears = (): string[] => {
-    const years: string[] = [];
-    for (let year = startYear; year <= currentYear; year++) {
-      if (year === currentYear && currentMonth < 7) {
-        // If we are in the current year, but before August, don't add the next academic year yet
-        break;
-      }
-      years.push(`${year}/${year + 1}`);
-    }
-    return years;
-  };
+const Acknowledgement: React.FC = () => {
+    const [acknowledgementData, setAcknowledgementData] = useState<AcknowledgementSchema[]>([]);
+    const [loading, setLoading] = useState(true); // Added loading state
 
-  const academicYears = generateAcademicYears();
+    useEffect(() => {
+        axios
+          .get(`${API_BASE_URL}/acknowledgement`)
+          .then((response) => {
+            setAcknowledgementData(response.data.slice().reverse());
+            setLoading(false); // Set loading to false after data is fetched
+          })
+          .catch((error) => {
+            console.error('Error fetching data:', error);
+            setLoading(false); // Set loading to false if an error occurs
+          });
+      }, []);
 
   return (
-    <div className="mt-5 w-full">
-      <h1 className="text-xl md:text-3xl font-bold mb-4 text-center uppercase">{textTitle}</h1>
-      {academicYears.map((year) => (
-      <ul className="list-disc bg-gray-100 p-5 rounded-lg shadow-lg mb-3 cursor-pointer bg-white" key={year} onClick={()=>showClasses(year)}>
-          <li className="text-lg text-[#EE3A57] font-semibold w-full">
-            {year} academic session
-          </li>
-      </ul>
-      ))}
+    <>
+    <div>
+    {loading ? ( // Show loading message while fetching data
+          <h1>Loading...</h1>
+        ) : (
+          <div>
+            {acknowledgementData.length > 0 ? <div className="flex flex-col md:flex-row justify-around gap-2 mb-4">
+            <div className="relative w-5/6 md:w-1/3 h-48 md:h-64 px-4 self-center"> 
+             <Image
+                 src={acknowledgementData[0].photo}
+                 alt="Description"
+                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                 layout="fill"
+                 objectFit="cover"  // Use Tailwind's utility class for object-fit
+                 className="absolute inset-0 rounded-sm"
+             />
+           </div>
+                <div className="flex flex-col w-full md:w-1/3 mt-5 md:mt-0">
+                    <h1 className='text-lg text-center md:text-xl uppercase font-bold mb-2'>word of acknowledgement</h1>
+                    <p className='text-justify'><span className='p-2'></span>{acknowledgementData[0].acknowledgement}</p>
+                </div>
+            </div> : (
+              <h1>No acknowledgementData yet</h1>
+            )}
+          </div>
+        )}
     </div>
+    </>
   );
 };
 
-export default AcademicSessions;
+export default Acknowledgement;
