@@ -17,7 +17,7 @@ interface Data{
 
 const CalendarData = () => {
     const [calendarDisplay, setCalendarDisplay] = useState<boolean>(false)
-    const [results, setResults] = useState<any[]>([]); // To store search results
+    const [results, setResults] = useState<Data[]>([]); // To store search results
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [terms, setTerms] = useState<boolean>(false)
