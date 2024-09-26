@@ -1,9 +1,6 @@
 "use client"
 import Image from "next/image";
-import {useState} from "react"
-import Edit from "../../atoms/icons/whiteEdit.svg"
-import Delete from "../../atoms/icons/whiteDelete.svg"
-import Cancel from "../../atoms/icons/whiteCancel.svg"
+
 
 interface Props {
     src: string;
