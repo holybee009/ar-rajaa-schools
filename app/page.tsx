@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef,useEffect,useState } from "react";
-import { API_BASE_URL } from "@/config.ts";
+import { API_BASE_URL } from "@/config";
 import Header from "./components/minicomponents/header.tsx";
 import PageWrapper from "./components/minicomponents/pageWrapper/index.tsx";
 import News from "./components/minicomponents/news/index.tsx";
