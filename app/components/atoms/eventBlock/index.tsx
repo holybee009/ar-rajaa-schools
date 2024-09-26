@@ -1,6 +1,5 @@
 "use client"
 // EventBlockonents/EventBlock.tsx
-import { useState } from 'react';
 import Image from 'next/image';
 import Calendar from "../../icons/calendar.svg";
 import Location from "../../icons/location.svg";
