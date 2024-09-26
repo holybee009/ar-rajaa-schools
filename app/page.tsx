@@ -1,101 +1,113 @@
-import Image from "next/image";
+"use client";
+import React, { useRef,useEffect,useState } from "react";
+import { API_BASE_URL } from "@/config.ts";
+import Header from "./components/minicomponents/header.tsx";
+import PageWrapper from "./components/minicomponents/pageWrapper/index.tsx";
+import News from "./components/minicomponents/news/index.tsx";
+import Recent from "./components/minicomponents/recent/index.tsx";
+import Event from "./components/minicomponents/events/index.tsx";
+import Acknowledgement from "./components/minicomponents/acknowledgement/index.tsx";
+import Vision from "./components/minicomponents/vision/index.tsx";
+import Admission from "./components/minicomponents/admissions/index.tsx";
+import Footer from "./components/minicomponents/footer/index.tsx";
+import axios from "axios";
+import Image from "next/image.js";
+import Logo from "./components/images/ar-rajaa logo1.png"
 
+
+
+interface aboutSchema{
+  _id:string,
+  about:string,
+}
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [about, setAbout] = useState<aboutSchema[]>([])
+  const newsRef = useRef<HTMLDivElement>(null);
+  const eventRef = useRef<HTMLDivElement>(null);
+  const admissionsRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true); // Added loading state
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(()=>{
+    axios.get(`${API_BASE_URL}/about`)
+    .then(response => {
+      setAbout(response.data.slice().reverse());
+      setLoading(false); // Set loading to false when data is fetched
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      setLoading(false); // Set loading to false even if there is an error
+    });
+  },[])
+
+
+  // Offset the scroll to account for the fixed navbar height
+  const handleScroll = (val: string) => {
+    const offset = 100; // Adjust this to match your fixed header height
+    let element: HTMLDivElement | null = null;
+
+    switch (val) {
+      case "news":
+        element = newsRef.current;
+        break;
+      case "events":
+        element = eventRef.current;
+        break;
+      case "admissions":
+        element = admissionsRef.current;
+        break;
+      default:
+        break;
+    }
+
+    if (element) {
+      const topPosition = element.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({
+        top: topPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+
+
+  return (
+    <>
+      <div className="relative">
+      {loading ? (
+        // Show the loading image if any of the components is still loading
+        <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
+          <Image
+            src={Logo} // Path to your loading image
+            alt="Loading"
+            width={150}
+            height={150}
+            className="animate-grow-shrink"  // Varying opacity
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      ) :   <div>
+      <Header handleScroll={handleScroll} home={true} about={about[0]?.about}/>
+      <PageWrapper>
+        <Recent />
+      </PageWrapper>
+      <div className="bg-[#0D3C1D] my-6 px-4 md:px-8 lg:px-16 p-4 py-6 flex flex-col md:flex-row justify-between gap-10">
+        <div ref={newsRef} className='w-full md:w-1/2'>
+          <News />
+        </div>
+        <div ref={eventRef} className="w-full">
+          <Event />
+        </div>
+      </div>
+      <PageWrapper className="pt-1 md:pt-4">
+        <Acknowledgement />
+        <Vision />
+        <div ref={admissionsRef}>
+          <Admission />
+        </div>
+      </PageWrapper>
+      <Footer handleScroll={handleScroll} />
     </div>
+    }
+    </div>
+    </>
   );
 }

@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        "mobileScroll" : "28rem"
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

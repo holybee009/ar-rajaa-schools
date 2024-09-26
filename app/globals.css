@@ -25,3 +25,19 @@ body {
     text-wrap: balance;
   }
 }
+
+/* In your CSS file */
+@keyframes growShrink {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.5;
+  }
+}
+
+.animate-grow-shrink {
+  animation: growShrink 1.5s infinite; /* Adjust duration as needed */
+}
