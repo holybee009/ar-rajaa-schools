@@ -6,10 +6,6 @@ import { API_BASE_URL } from '@/config';
 import Image from 'next/image';
 
 
-interface AcknowledgementProps {
-    handleScroll: (_: string) => void
-}
-
 interface AcknowledgementSchema {
     _id: string;
     acknowledgement: string,
