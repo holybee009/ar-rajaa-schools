@@ -6,10 +6,6 @@ import { API_BASE_URL } from '@/config';
 import Image from 'next/image';
 import VisImage from "../../images/vision.png"
 
-interface VisionProps {
-    handleScroll: (_: string) => void
-}
-
 interface VisionSchema {
     _id: string;
     vision: string,
