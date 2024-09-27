@@ -1,8 +1,5 @@
 "use client"
 // Visiononents/Vision.tsx
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '@/config';
 import Image from 'next/image';
 import VisImage from "../../images/vision.png"
 
