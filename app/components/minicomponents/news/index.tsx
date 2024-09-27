@@ -1,8 +1,5 @@
 "use client"
 // components/News.tsx
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '@/config';
 import NewsBlock from '../../atoms/newsBlock/index';
 import './CustomScrollbar.css';
 import Link from 'next/link';
