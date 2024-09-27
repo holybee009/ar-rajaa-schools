@@ -22,7 +22,6 @@ interface CalendarSchema {
   calendarData: Data[],
 };
 
-
 const CalendarData = () => {
     const [calendarDisplay, setCalendarDisplay] = useState<boolean>(false)
     const [results, setResults] = useState<CalendarSchema[]>([]); // To store search results
