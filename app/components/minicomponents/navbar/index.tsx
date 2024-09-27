@@ -33,6 +33,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleScroll, about, className, classNa
     };
 
     return (
+        <div> 
         <div className={`${classNames} md:block`}>
         <div className={`bg-[#fff] w-1/2 md:w-full h-screen md:h-auto absolute top-0 right-0 md:static flex flex-col`}>
         <Image src={Cancel} alt="cancel" width={24} height={24} className={`${className} cursor-pointer md:hidden`} onClick={hideNav}/>
@@ -52,6 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ handleScroll, about, className, classNa
                     ))}
                 </ul>
             </nav>
+        </div>
         </div>
         {<Modal show={show} onClose={() => setShow(false)}>
             <div className='text-black text-center'>
