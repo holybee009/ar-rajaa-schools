@@ -18,7 +18,7 @@ const Vision: React.FC<Props> = ({visionData}) => {
     <>
     <div className='my-16'>
           <div>
-            {visionData.length > 0 ? <div className="flex flex-col md:flex-row-reverse justify-around gap-2 my-4">
+            {visionData.length > 0 ? <div className="flex flex-col md:flex-row-reverse justify-around gap-10 md:gap-2 my-4">
             <div className="relative w-5/6 md:w-1/3 h-48 md:h-64 px-4 self-center justify-self-start">
              <Image
                  src={VisImage}
