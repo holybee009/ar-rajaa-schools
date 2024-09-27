@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ handleScroll, home, status, about }) =>
       <div className='text-md md:text-xl text-white capitalize'>{status}</div> 
       { home ? <div>
         <Image src={Menu} alt='menu' width={24} height={24} className='block md:hidden' onClick={showNav}/>
-          <Navbar closeNav={hideNav} handleScroll={handleScroll} about={about} classNames={nav ? "md:visible h-full shadow shadow-xl z-30" : "invisible md:visible"} className="text-end mt-5 mb-3 self-end mr-4"  hideNav={hideNav}/>
+          <Navbar closeNav={hideNav} handleScroll={handleScroll} about={about} classNames={nav ? "block md:block h-full shadow shadow-xl z-30" : "hidden md:block"} className="text-end mt-5 mb-3 self-end mr-4"  hideNav={hideNav}/>
            </div>
          : <Link href="/" className='flex items-center gap-1 justify-center'>
         <Image src={Home} alt='hoome' width={24} height={24} />

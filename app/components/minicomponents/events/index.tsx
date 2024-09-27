@@ -14,21 +14,12 @@ interface EventSchema {
     date: string,
 }
 
-const Event: React.FC = () => {
-    const [eventData, setEventData] = useState<EventSchema[]>([]);
-    const [loading, setLoading] = useState(true); // Added loading state
+interface Props {
+    eventData: EventSchema[]
+}
 
-    useEffect(() => {
-        axios.get(`${API_BASE_URL}/event`)
-          .then(response => {
-            setEventData(response.data.slice().reverse());
-            setLoading(false); // Set loading to false after data is fetched
-          })
-          .catch(error => {
-            console.error('Error fetching data:', error);
-            setLoading(false); // Set loading to false if an error occurs
-          });
-      }, []);
+const Event: React.FC<Props> = ({eventData}) => {
+
 
 
         // for getting the desired date format
@@ -59,9 +50,6 @@ const Event: React.FC = () => {
     <>
         <div className='w-full h-56 mt-2 md:mt-0'>
         <h1 className="text-xl text-white mb-2 capitalize">event:</h1>
-        {loading ? ( // Show loading message while fetching data
-          <h1>Loading...</h1>
-        ) : (
             <div className="w-full h-48 sm:h-64 p-4 overflow-y-auto custom-scrollbar">
             {eventData.length > 0 ? (
               eventData.map((event) => (
@@ -76,7 +64,6 @@ const Event: React.FC = () => {
               <h1>No event yet</h1>
             )}
           </div>
-        )}
       </div>
     </>
   );

@@ -8,16 +8,24 @@ import Button from "../../atoms/button";
 import Terms from "../../term"
 
 interface Data{
-    _id:string
+    _id: string,
     selectedNumber: number,
     startDate:string, 
     endDate:string, 
     scheduleName:string
-}
+  };
+
+interface CalendarSchema {
+    _id: string,
+  selectedYear: string,
+  term: string,
+  calendarData: Data[],
+};
+
 
 const CalendarData = () => {
     const [calendarDisplay, setCalendarDisplay] = useState<boolean>(false)
-    const [results, setResults] = useState<any[]>([]); // To store search results
+    const [results, setResults] = useState<CalendarSchema[]>([]); // To store search results
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [terms, setTerms] = useState<boolean>(false)
