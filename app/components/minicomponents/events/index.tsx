@@ -1,8 +1,5 @@
 "use client"
 // Eventonents/Event.tsx
-import { useState,useEffect } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '@/config';
 import EventBlock from '../../atoms/eventBlock';
 import './CustomScrollbar.css'; // Import custom scrollbar styles
 
