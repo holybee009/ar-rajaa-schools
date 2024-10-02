@@ -11,7 +11,7 @@ const Calendar: React.FC = () => {
     <>
     <div>
         <Header  home={false} status='school calendar'/>
-        <PageWrapper>
+        <PageWrapper className="relative">
             <CalendarData />
         </PageWrapper>
         <Footer/>
