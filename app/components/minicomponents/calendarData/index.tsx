@@ -90,7 +90,7 @@ const CalendarData = () => {
     return (
         <>
         <div className="min-h-96"> 
-        {calendarDisplay ? <div className="relative min-h-96">
+        {calendarDisplay ? <div className="min-h-96">
               {loading ? (
         <p>Loading...</p>
       ) : error ? (
